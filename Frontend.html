@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entropy Media Network — GTM Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #03020a;
+    --deep: #070514;
+    --surface: #0d0a1e;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --accent: #7c3aed;
+    --accent-bright: #a855f7;
+    --plasma: #06b6d4;
+    --plasma-dim: rgba(6,182,212,0.15);
+    --gold: #f59e0b;
+    --white: #f8f6ff;
+    --muted: rgba(248,246,255,0.45);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── STARS CANVAS ── */
+  #stars-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(12px);
+    background: rgba(3,2,10,0.7);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, var(--white), var(--accent-bright));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo span {
+    background: linear-gradient(135deg, var(--plasma), var(--accent-bright));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--accent), #6d28d9);
+    color: var(--white) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2rem;
+    font-weight: 600 !important;
+    transition: opacity 0.2s, transform 0.2s !important;
+    box-shadow: 0 0 20px rgba(124,58,237,0.4);
+  }
+
+  .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ── SECTIONS WRAPPER ── */
+  section { position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10rem 5vw 6rem;
+    overflow: hidden;
+  }
+
+  .hero-orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(124,58,237,0.15);
+    animation: spin linear infinite;
+    pointer-events: none;
+  }
+
+  .hero-orbit-ring::before {
+    content: '';
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    top: -5px; left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .ring-1 { width: 480px; height: 480px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-duration: 18s; }
+  .ring-1::before { background: var(--accent-bright); box-shadow: 0 0 14px var(--accent-bright); }
+
+  .ring-2 { width: 680px; height: 680px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-duration: 30s; animation-direction: reverse; border-color: rgba(6,182,212,0.1); }
+  .ring-2::before { background: var(--plasma); box-shadow: 0 0 14px var(--plasma); }
+
+  .ring-3 { width: 900px; height: 900px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-duration: 48s; border-color: rgba(245,158,11,0.06); }
+  .ring-3::before { background: var(--gold); box-shadow: 0 0 10px var(--gold); width:7px; height:7px; top:-3.5px; }
+
+  @keyframes spin { from { rotate: 0deg; } to { rotate: 360deg; } }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 2rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--plasma);
+    margin-bottom: 2rem;
+    backdrop-filter: blur(8px);
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--plasma); box-shadow: 0 0 8px var(--plasma); animation: pulse 2s ease infinite; }
+
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 6vw, 5.4rem);
+    font-weight: 800;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    max-width: 900px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.9s 0.15s ease both;
+  }
+
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--plasma) 0%, var(--accent-bright) 60%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 2.8rem;
+    font-weight: 300;
+    animation: fadeUp 0.9s 0.3s ease both;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.9s 0.45s ease both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), #6d28d9);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    border-radius: 2rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(124,58,237,0.5), 0 4px 20px rgba(0,0,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(124,58,237,0.7), 0 8px 30px rgba(0,0,0,0.5);
+  }
+
+  .btn-secondary {
+    background: var(--glass);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    border-radius: 2rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+  }
+
+  /* ── SECTION SHARED ── */
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--plasma);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-body {
+    color: var(--muted);
+    font-size: 1.05rem;
+    font-weight: 300;
+    max-width: 520px;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 8rem 5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-visual {
+    position: relative;
+    height: 460px;
+  }
+
+  .about-card {
+    position: absolute;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+  }
+
+  .about-card-main {
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(160deg, rgba(124,58,237,0.12) 0%, rgba(6,182,212,0.06) 100%);
+    border-color: rgba(124,58,237,0.25);
+  }
+
+  .founder-initials {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--plasma));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 30px rgba(124,58,237,0.5);
+  }
+
+  .founder-name {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+  }
+
+  .founder-title {
+    color: var(--plasma);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid rgba(124,58,237,0.2);
+    padding: 1.2rem 1.5rem;
+    border-radius: 14px;
+  }
+
+  .stat-card-tl { top: -16px; left: -16px; }
+  .stat-card-br { bottom: -16px; right: -16px; }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--gold), var(--accent-bright));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .stat-label { font-size: 0.8rem; color: var(--muted); }
+
+  .about-quote {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    color: var(--accent-bright);
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .tag {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 2rem;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── SERVICES (ORBIT) ── */
+  .services {
+    padding: 8rem 5vw;
+    text-align: center;
+  }
+
+  .services-header { max-width: 600px; margin: 0 auto 5rem; }
+
+  .orbit-system {
+    position: relative;
+    width: 700px;
+    height: 700px;
+    margin: 0 auto;
+  }
+
+  .orbit-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.5), rgba(124,58,237,0.05));
+    border: 1px solid rgba(124,58,237,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-bright);
+    box-shadow: 0 0 50px rgba(124,58,237,0.3), inset 0 0 30px rgba(124,58,237,0.2);
+    z-index: 10;
+  }
+
+  .orbit-track {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    border: 1px dashed rgba(255,255,255,0.06);
+  }
+
+  .orbit-track-1 { width: 300px; height: 300px; }
+  .orbit-track-2 { width: 500px; height: 500px; }
+  .orbit-track-3 { width: 680px; height: 680px; }
+
+  .orbit-item {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform-origin: 0 0;
+    animation: orbitItem linear infinite;
+  }
+
+  .planet {
+    position: absolute;
+    transform: translate(-50%,-50%);
+    width: 130px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.1rem;
+    backdrop-filter: blur(12px);
+    cursor: default;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    text-align: center;
+    animation: counterSpin linear infinite;
+  }
+
+  .planet:hover {
+    transform: translate(-50%,-50%) scale(1.12);
+    box-shadow: 0 0 30px var(--planet-glow, rgba(124,58,237,0.5));
+    border-color: var(--planet-color, var(--accent-bright));
+  }
+
+  .planet-icon { font-size: 1.6rem; margin-bottom: 0.4rem; }
+
+  .planet-name {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--white);
+  }
+
+  /* Orbit positions: each item is placed on track radius, angled */
+  /* Track1 r=150, Track2 r=250, Track3 r=340 */
+
+  .oi-1 { animation-duration: 14s; }
+  .oi-2 { animation-duration: 22s; animation-delay: -4s; }
+  .oi-3 { animation-duration: 18s; animation-delay: -8s; }
+  .oi-4 { animation-duration: 26s; animation-delay: -2s; }
+  .oi-5 { animation-duration: 20s; animation-delay: -10s; }
+  .oi-6 { animation-duration: 16s; animation-delay: -6s; }
+
+  .oi-1 .planet, .oi-2 .planet { animation-duration: 14s; }
+  .oi-3 .planet, .oi-4 .planet { animation-duration: 22s; }
+  .oi-5 .planet, .oi-6 .planet { animation-duration: inherit; }
+
+  @keyframes orbitItem {
+    from { rotate: 0deg; }
+    to { rotate: 360deg; }
+  }
+
+  @keyframes counterSpin {
+    from { rotate: 0deg; }
+    to { rotate: -360deg; }
+  }
+
+  /* Place items at correct radius */
+  .oi-1 { margin-left: 150px; animation-duration: 14s; }
+  .oi-1 .planet { animation-duration: 14s; }
+
+  .oi-2 { margin-left: -150px; animation-duration: 20s; animation-delay: -5s; }
+  .oi-2 .planet { animation-duration: 20s; animation-delay: -5s; }
+
+  .oi-3 { margin-left: 250px; animation-duration: 24s; animation-delay: -8s; }
+  .oi-3 .planet { animation-duration: 24s; animation-delay: -8s; }
+
+  .oi-4 { margin-left: -250px; animation-duration: 30s; animation-delay: -12s; }
+  .oi-4 .planet { animation-duration: 30s; animation-delay: -12s; }
+
+  .oi-5 { margin-left: 340px; animation-duration: 38s; animation-delay: -16s; }
+  .oi-5 .planet { animation-duration: 38s; animation-delay: -16s; }
+
+  .oi-6 { margin-left: -340px; animation-duration: 32s; animation-delay: -20s; }
+  .oi-6 .planet { animation-duration: 32s; animation-delay: -20s; }
+
+  .p1 { --planet-color: #a855f7; --planet-glow: rgba(168,85,247,0.5); }
+  .p2 { --planet-color: #06b6d4; --planet-glow: rgba(6,182,212,0.5); }
+  .p3 { --planet-color: #f59e0b; --planet-glow: rgba(245,158,11,0.5); }
+  .p4 { --planet-color: #10b981; --planet-glow: rgba(16,185,129,0.5); }
+  .p5 { --planet-color: #f43f5e; --planet-glow: rgba(244,63,94,0.5); }
+  .p6 { --planet-color: #818cf8; --planet-glow: rgba(129,140,248,0.5); }
+
+  .services-list-fallback {
+    display: none;
+  }
+
+  /* ── WHY US ── */
+  .why {
+    padding: 8rem 5vw;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .why-inner {
+    background: linear-gradient(135deg, rgba(124,58,237,0.1) 0%, rgba(6,182,212,0.06) 100%);
+    border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 32px;
+    padding: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why-inner::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.15), transparent 70%);
+    top: -200px; right: -200px;
+    pointer-events: none;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .why-item {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .why-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    border-radius: 12px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+
+  .why-item-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .why-item-desc { color: var(--muted); font-size: 0.92rem; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials {
+    padding: 8rem 5vw;
+    text-align: center;
+  }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 4rem auto 0;
+  }
+
+  .testi-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: left;
+    backdrop-filter: blur(12px);
+    position: relative;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .testi-card:nth-child(1) { animation: floatCard 6s ease-in-out infinite; }
+  .testi-card:nth-child(2) { animation: floatCard 6s ease-in-out infinite 2s; }
+  .testi-card:nth-child(3) { animation: floatCard 6s ease-in-out infinite 4s; }
+
+  @keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .testi-metric {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--plasma), var(--accent-bright));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 1rem;
+  }
+
+  .testi-quote {
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .testi-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .testi-name { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; }
+  .testi-co { font-size: 0.78rem; color: var(--muted); }
+
+  .stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 0.5rem; }
+
+  /* ── CONTACT ── */
+  .contact {
+    padding: 8rem 5vw;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-form {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    text-align: left;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  input, textarea, select {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent-bright);
+    box-shadow: 0 0 0 3px rgba(168,85,247,0.15);
+  }
+
+  input::placeholder, textarea::placeholder { color: rgba(248,246,255,0.25); }
+
+  textarea { resize: vertical; min-height: 120px; }
+
+  select option { background: var(--surface); }
+
+  .form-submit {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--glass-border);
+    padding: 3rem 5vw;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--plasma), transparent);
+    margin-bottom: 3rem;
+    opacity: 0.3;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-copy { font-size: 0.8rem; color: var(--muted); }
+
+  .linkedin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 2rem;
+    padding: 0.5rem 1.2rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .linkedin-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
+
+  /* ── GLOW BLOB DECORATORS ── */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .about-visual { height: 320px; }
+    .orbit-system { width: 340px; height: 340px; }
+    .oi-1 { margin-left: 100px; }
+    .oi-2 { margin-left: -100px; }
+    .oi-3 { margin-left: 160px; }
+    .oi-4 { margin-left: -160px; }
+    .oi-5, .oi-6 { display: none; }
+    .orbit-track-3 { display: none; }
+    .orbit-track-1 { width: 200px; height: 200px; }
+    .orbit-track-2 { width: 320px; height: 320px; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-inner { padding: 2.5rem; }
+    .contact-form { grid-template-columns: 1fr; }
+    nav ul { display: none; }
+    .orbit-center { width: 80px; height: 80px; font-size: 0.6rem; }
+    .planet { width: 100px; padding: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">ENTROPY<span>MN</span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Book a Call</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-orbit-ring ring-1"></div>
+  <div class="hero-orbit-ring ring-2"></div>
+  <div class="hero-orbit-ring ring-3"></div>
+
+  <div class="blob" style="width:600px;height:600px;background:rgba(124,58,237,0.12);top:-100px;left:-200px;"></div>
+  <div class="blob" style="width:400px;height:400px;background:rgba(6,182,212,0.08);bottom:-50px;right:-150px;"></div>
+
+  <div class="hero-badge"><span></span>Go-To-Market Systems Architecture</div>
+
+  <h1>Turning Market Chaos into<br><em>Predictable Growth Systems.</em></h1>
+
+  <p class="hero-sub">Entropy Media Network builds scalable Go-To-Market systems that align strategy, execution, and momentum — so growth feels inevitable.</p>
+
+  <div class="btn-group">
+    <a href="#contact" class="btn-primary">Build My GTM System</a>
+    <a href="#contact" class="btn-secondary">Book a Strategy Call →</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual">
+    <div class="about-card about-card-main">
+      <div class="founder-initials">RJ</div>
+      <div class="founder-name">Ranjana Jha</div>
+      <div class="founder-title">Founder & Strategic Growth Architect</div>
+    </div>
+    <div class="about-card stat-card stat-card-tl">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">GTM Systems Built</div>
+    </div>
+    <div class="about-card stat-card stat-card-br">
+      <div class="stat-num">4×</div>
+      <div class="stat-label">Avg. Pipeline Growth</div>
+    </div>
+  </div>
+
+  <div class="about-content">
+    <div class="section-label">Our Story</div>
+    <div class="about-quote">"Entropy is natural.<br>Structure is intentional."</div>
+    <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.4rem)">We Create Order<br>from Market Chaos.</h2>
+    <p class="section-body">Ranjana founded Entropy Media Network after watching promising startups collapse — not from lack of product quality, but from lack of system. She's a systems thinker and GTM architect who believes growth isn't luck — it's architecture.</p>
+    <p class="section-body" style="margin-top:1rem;">We solve the problem of disconnected strategy: teams with great ideas but no cohesive engine to take them to market at scale. Our vision is a world where every startup competes on strategy, not just budget.</p>
+    <div class="tag-row">
+      <span class="tag">Strategic Growth Architect</span>
+      <span class="tag">Systems Thinker</span>
+      <span class="tag">GTM Expert</span>
+      <span class="tag">Startup Advisor</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="blob" style="width:700px;height:700px;background:rgba(124,58,237,0.07);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+
+  <div class="services-header">
+    <div class="section-label">What We Build</div>
+    <h2 class="section-title">Your Growth Ecosystem</h2>
+    <p class="section-body" style="margin:0 auto">Six precision services, each a gravitational force that pulls your market toward you.</p>
+  </div>
+
+  <div class="orbit-system">
+    <div class="orbit-track orbit-track-1"></div>
+    <div class="orbit-track orbit-track-2"></div>
+    <div class="orbit-track orbit-track-3"></div>
+
+    <div class="orbit-center">GTM<br>CORE</div>
+
+    <div class="orbit-item oi-1">
+      <div class="planet p1">
+        <div class="planet-icon">🔭</div>
+        <div class="planet-name">Market Research & Positioning</div>
+      </div>
+    </div>
+
+    <div class="orbit-item oi-2">
+      <div class="planet p2">
+        <div class="planet-icon">✦</div>
+        <div class="planet-name">Brand Messaging</div>
+      </div>
+    </div>
+
+    <div class="orbit-item oi-3">
+      <div class="planet p3">
+        <div class="planet-icon">⚡</div>
+        <div class="planet-name">Demand Generation</div>
+      </div>
+    </div>
+
+    <div class="orbit-item oi-4">
+      <div class="planet p4">
+        <div class="planet-icon">🏗️</div>
+        <div class="planet-name">Funnel Architecture</div>
+      </div>
+    </div>
+
+    <div class="orbit-item oi-5">
+      <div class="planet p5">
+        <div class="planet-icon">🚀</div>
+        <div class="planet-name">Launch Strategy</div>
+      </div>
+    </div>
+
+    <div class="orbit-item oi-6">
+      <div class="planet p6">
+        <div class="planet-icon">📡</div>
+        <div class="planet-name">Content-Led Growth</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="why-inner">
+    <div class="section-label">Differential</div>
+    <h2 class="section-title">Why Brands Trust<br>Our Gravity</h2>
+
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">⚙️</div>
+        <div>
+          <div class="why-item-title">Systems, Not Random Tactics</div>
+          <div class="why-item-desc">We don't spray and pray. Every engagement is a structured, repeatable machine designed for compounding results.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">📊</div>
+        <div>
+          <div class="why-item-title">Data-Backed Execution</div>
+          <div class="why-item-desc">Decisions are grounded in signal, not instinct. We instrument everything and optimize ruthlessly.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🧠</div>
+        <div>
+          <div class="why-item-title">Founder-Led Strategy</div>
+          <div class="why-item-desc">Ranjana works directly with every client. No junior handoffs. Senior thinking on your most critical growth lever.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🔗</div>
+        <div>
+          <div class="why-item-title">End-to-End GTM Alignment</div>
+          <div class="why-item-desc">Strategy, content, demand, and sales — all connected. One coherent system instead of siloed activity.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-label">Social Proof</div>
+  <h2 class="section-title">Clients in New Orbits</h2>
+
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-metric">4× Pipeline</div>
+      <div class="testi-quote">"Ranjana didn't just advise us — she built the entire system from scratch. Our pipeline quadrupled in 90 days."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#7c3aed,#06b6d4)">AK</div>
+        <div>
+          <div class="testi-name">Arjun Kapoor</div>
+          <div class="testi-co">CEO, Nexus Labs</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-metric">60% CAC Drop</div>
+      <div class="testi-quote">"The funnel architecture alone cut our customer acquisition cost by 60%. It's like they found hidden leverage everywhere."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#f59e0b,#f43f5e)">SR</div>
+        <div>
+          <div class="testi-name">Shreya Rao</div>
+          <div class="testi-co">CMO, Vantara SaaS</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-metric">3× MRR in 6mo</div>
+      <div class="testi-quote">"We went from 'doing marketing' to having a genuine GTM engine. The difference in our growth trajectory is night and day."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#10b981,#06b6d4)">PM</div>
+        <div>
+          <div class="testi-name">Priya Mehta</div>
+          <div class="testi-co">Founder, Claritex AI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="blob" style="width:500px;height:500px;background:rgba(6,182,212,0.07);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Ready to Enter a New<br><em style="font-style:normal;background:linear-gradient(135deg,var(--plasma),var(--accent-bright));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Growth Orbit?</em></h2>
+  <p class="section-body" style="margin:0 auto 0">Tell us where you are. We'll architect where you need to go.</p>
+
+  <form class="contact-form" onsubmit="handleSubmit(event)">
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" placeholder="Ranjana Jha" required>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" placeholder="hello@company.com" required>
+    </div>
+    <div class="form-group">
+      <label>Company</label>
+      <input type="text" placeholder="Your Startup">
+    </div>
+    <div class="form-group">
+      <label>Budget Range</label>
+      <select>
+        <option value="">Select range</option>
+        <option>$2k – $5k / month</option>
+        <option>$5k – $10k / month</option>
+        <option>$10k – $25k / month</option>
+        <option>$25k+ / month</option>
+      </select>
+    </div>
+    <div class="form-group full">
+      <label>Message</label>
+      <textarea placeholder="Tell us about your growth goals and current challenges..."></textarea>
+    </div>
+    <div class="form-submit">
+      <button type="submit" class="btn-primary" style="border:none;font-size:1rem;padding:1rem 2.5rem;">🚀 Launch My Growth System</button>
+    </div>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-divider"></div>
+  <div class="footer-inner">
+    <div class="logo" style="font-size:1rem;">ENTROPY<span style="background:linear-gradient(135deg,#06b6d4,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">MN</span></div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="https://linkedin.com" target="_blank" class="linkedin-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+    <div class="footer-copy">© 2025 Entropy Media Network. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+// ── STAR FIELD ──
+const canvas = document.getElementById('stars-canvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+let W, H;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function initStars() {
+  stars = Array.from({ length: 180 }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.4 + 0.2,
+    o: Math.random() * 0.7 + 0.1,
+    speed: Math.random() * 0.15 + 0.02,
+    twinkle: Math.random() * Math.PI * 2
+  }));
+}
+
+function drawStars(t) {
+  ctx.clearRect(0, 0, W, H);
+  stars.forEach(s => {
+    s.twinkle += 0.008;
+    const opacity = s.o * (0.7 + 0.3 * Math.sin(s.twinkle));
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(200,190,255,${opacity})`;
+    ctx.fill();
+
+    s.y -= s.speed;
+    if (s.y < -5) { s.y = H + 5; s.x = Math.random() * W; }
+  });
+  requestAnimationFrame(drawStars);
+}
+
+resize();
+initStars();
+drawStars();
+window.addEventListener('resize', () => { resize(); initStars(); });
+
+// ── FORM HANDLER ──
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.textContent = '✓ Message Sent — We\'ll be in touch!';
+  btn.style.background = 'linear-gradient(135deg, #10b981, #06b6d4)';
+  btn.disabled = true;
+}
+
+// ── SCROLL FADE IN ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.about-content, .why-item, .testi-card, .about-visual').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(30px)';
+  el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
